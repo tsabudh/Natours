@@ -4,16 +4,63 @@ const Tour = require('../models/tourModel');
 //   fs.readFileSync(`${__dirname}/../dev-data/data/tours-simple.json`)
 // );
 
+exports.aliasTopTours = (req, res, next) => {
+  req.query.limit = 5;
+  req.query.sort = 'price,-ratingsAverage';
+  req.query.fields = 'name,price,summary,difficulty,ratingsAverage';
+  next();
+};
+
 exports.getAllTours = async (req, res) => {
   try {
-    console.log(req.query);
-    const tours = await Tour.find();
+    //  1A) FILTERING
+    const queryObj = { ...req.query };
+    const excludedFields = ['sort', 'page', 'limit', 'fields'];
+    excludedFields.forEach((el) => delete queryObj[el]);
 
-    // const tours = await Tour.find({
-    //   difficulty: 'easy',
-    //   duration: 5,
-    // });
-    console.log(tours);
+    console.log(req.query);
+
+    //  1B) ADVANCED FILTERING
+    const queryStr = JSON.stringify(queryObj).replace(
+      /\b(gt|gte|lt|lte)\b/g,
+      (matchedItems) => `$${matchedItems}`
+    );
+    let query = Tour.find(JSON.parse(queryStr));
+
+    //  2) SORTING   queryObject.sort('property1 property2');
+    if (req.query.sort) {
+      const sortBy = req.query.sort.split(',').join(' '); //eg: 'price ratingsAverage
+      query = query.sort(sortBy);
+    } else {
+      // query = query.sort('-createdAt');
+      query = query.sort('price ratingsAverage');
+    }
+
+    // 3) LIMITING FIELDS
+    if (req.query.fields) {
+      const fields = req.query.fields.split(',').join(' ');
+      console.log(fields);
+      query = query.select(fields);
+    } else {
+      query = query.select('-__v');
+    }
+
+    // 4) PAGINGINATION DEFAULT_LIMIT
+    const page = req.query.page * 1 || 1;
+    const limit = req.query.limit * 1 || 3;
+    const skip = (page - 1) * limit;
+    query = query.skip(skip).limit(limit);
+
+    // query = query.skip(2).limit(3);
+    if (req.query.page) {
+      const numTours = await Tour.countDocuments();
+      if (skip >= numTours) throw new Error('This page does not exist.');
+    }
+
+    //AWAITING
+    const tours = await query;
+
+    //SEND RESPONSE
     res.status(200).json({
       status: 'success',
       results: tours.length,
@@ -24,7 +71,7 @@ exports.getAllTours = async (req, res) => {
   } catch (err) {
     res.status(400).json({
       status: 'Fail',
-      message: 'COULD NOT GET TOURS',
+      message: `${err} COULD NOT GET TOURS`,
     });
   }
 };
