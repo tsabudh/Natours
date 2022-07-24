@@ -8,6 +8,10 @@ const tourSchema = new mongoose.Schema({
     unique: [true, 'A name must be unique'],
     trim: true,
   },
+  summary: {
+    type: String,
+    required: [true, 'A tour must have a summary.'],
+  },
   duration: {
     type: Number,
     required: [true, 'A tour must have a duration.'],
@@ -21,7 +25,7 @@ const tourSchema = new mongoose.Schema({
     required: [true, 'A tour must have a price'],
   },
 
-  ratingAverage: {
+  ratingsAverage: {
     type: Number,
     default: 4.5,
   },
@@ -55,6 +59,7 @@ const tourSchema = new mongoose.Schema({
   createdAt: {
     type: Date,
     default: Date.now(),
+    select: false,
   },
   startDates: [Date],
 });
