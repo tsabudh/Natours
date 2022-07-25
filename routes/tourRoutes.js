@@ -9,22 +9,22 @@ const tourController = require('../controllers/tourController');
 
 // ROUTES
 
+router.route('/tour-stats').get(tourController.getTourStats);
+
+router.route('/get-monthly-plan/:year').get(tourController.getMonthlyPlan);
+
 router
-  .route('/top-5-cheap')
+  .route('/top-5-cheap-tours')
   .get(tourController.aliasTopTours, tourController.getAllTours);
+
 router
   .route('/')
   .get(tourController.getAllTours)
-  .post(tourController.createTour)
-  .put(tourController.putTours)
-  .patch(tourController.patchTours)
-  .delete(tourController.deleteTours);
+  .post(tourController.createTour);
 
 router
   .route('/:id')
   .get(tourController.getTour)
-  .post(tourController.postTour)
-  .put(tourController.putTour)
   .patch(tourController.updateTour)
   .delete(tourController.deleteTour);
 
