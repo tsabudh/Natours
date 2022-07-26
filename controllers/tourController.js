@@ -54,7 +54,6 @@ exports.createTour = async function (req, res) {
       status: 'Fail',
       message: err,
     });
-    console.log(err);
   }
 };
 
@@ -110,7 +109,7 @@ exports.getTourStats = async (req, res) => {
   try {
     const stats = await Tour.aggregate([
       {
-        $match: { ratingsAverage: { $gte: 4.5 } },
+        $match: { ratingsAverage: { $gte: 0.5 } },
       },
       {
         $group: {
