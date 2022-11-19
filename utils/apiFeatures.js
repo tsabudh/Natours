@@ -53,7 +53,7 @@ class APIfeatures {
 
     const page = this.queryString.page * 1 || 1;
     const limit = this.queryString.limit * 1 || 3;
-
+    // console.log('from PAGINATE');
     // console.log(this.query.limit);
     const skip = (page - 1) * limit;
     this.query = this.query.skip(skip).limit(limit);

@@ -1,18 +1,20 @@
 const mongoose = require('mongoose');
 const slugify = require('slugify');
-const validator = require('validator');
+
+// const User = require('./userModel');
+// const validator = require('validator');
 
 //CONSTRUCTING A MONGOOSE SCHEMA
 const tourSchema = new mongoose.Schema(
   {
     name: {
       type: String,
-      required: [true, 'A tour must have a name.'],
+      required: [true, 'A tour must have a name'],
       unique: [true, 'A name must be unique'],
       trim: true,
-      maxlength: [40, 'A tour name must be less or equal than 40 characters.'],
-      minlength: [10, 'A tour name must be more or equal than 10 characters.'],
-      validate: [validator.isAlpha, 'A tour must only contains alphabets.'],
+      maxlength: [40, 'A tour name must be less or equal than 40 characters'],
+      minlength: [10, 'A tour name must be more or equal than 10 characters'],
+      // validate: [validator.isAlpha, 'A tour must only contains alphabets'],
     },
     slug: String,
     secretTour: {
@@ -21,16 +23,16 @@ const tourSchema = new mongoose.Schema(
     },
     summary: {
       type: String,
-      required: [true, 'A tour must have a summary.'],
+      required: [true, 'A tour must have a summary'],
       trim: true,
-      maxlength: [100, 'A tour name must be less or equal than 40 characters.'],
-      minlength: [20, 'A tour name must be more or equal than 10 characters.'],
+      maxlength: [100, 'A tour name must be less or equal than 40 characters'],
+      minlength: [20, 'A tour name must be more or equal than 10 characters'],
     },
     duration: {
       type: Number,
-      required: [true, 'A tour must have a duration.'],
+      required: [true, 'A tour must have a duration'],
       min: 1,
-      max: 12,
+      max: 15,
     },
     maxGroupSize: {
       type: Number,
@@ -64,7 +66,7 @@ const tourSchema = new mongoose.Schema(
           //this only points to the current doc when NEW  document creation
           return discountPrice < this.price;
         },
-        message: 'Discounted price cannot be greater than actual price.',
+        message: 'Discounted price cannot be greater than actual price',
       },
     },
 
@@ -86,6 +88,33 @@ const tourSchema = new mongoose.Schema(
       select: false,
     },
     startDates: [Date],
+
+    startLocation: {
+      //GeoJSON
+      type: {
+        type: String,
+        default: 'Point',
+        enum: ['Point'],
+      },
+      coordinates: [Number],
+      address: String,
+      description: String,
+    },
+
+    locations: [
+      {
+        type: {
+          type: String,
+          default: 'Point',
+          enum: ['Point'],
+        },
+        coordinates: [Number],
+        address: String,
+        description: String,
+        day: Number,
+      },
+    ],
+    guides: [{ type: mongoose.Schema.ObjectId, ref: 'User' }],
   },
   {
     toJSON: { virtuals: true },
@@ -95,6 +124,14 @@ const tourSchema = new mongoose.Schema(
 
 tourSchema.virtual('durationWeeks').get(function () {
   return this.duration / 7;
+});
+
+// VIRTUAL POPULATE
+
+tourSchema.virtual('reviews', {
+  ref: 'Review',
+  foreignField: 'tour',
+  localField: '_id',
 });
 
 // 1) DOCUMENT MIDDLEWARE PRE SAVE HOOK DOCUMENT MIDDLEWARE ONLY WORKS ON SAVE AND CREATE
@@ -112,6 +149,20 @@ tourSchema.pre(/^find/, function (next) {
   this.start = Date.now();
   next();
 });
+
+tourSchema.pre(/^find/, function (next) {
+  this.populate({
+    path: 'guides',
+    select: '-__v -passwordChangedAt',
+  });
+  next();
+});
+
+// tourSchema.pre('save', async function (next) {
+//   const guidesPromises = this.guides.map(async (id) => await User.findById(id));
+//   this.guides = await Promise.all(guidesPromises);
+//   next();
+// });
 
 // 2B) POST FIND HOOK MIDDLEWARE
 tourSchema.post(/^find/, function (docs, next) {
