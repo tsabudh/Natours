@@ -94,6 +94,7 @@ exports.getAll = (Model) =>
       .limit()
       .paginate();
 
+    // const doc = await features.query.explain();
     const doc = await features.query;
 
     //SEND RESPONSE
