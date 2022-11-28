@@ -188,3 +188,23 @@ exports.getDistances = catchAsync(async (req, res, next) => {
     },
   });
 });
+
+// exports.saveAll = catchAsync(async (req, res, next) => {
+//   const tours = await Tour.find();
+//   // console.log(tours);
+//   // tours.update();
+//   // console.log(tour);
+//   //////////////////////////////
+//   // await Tour.validate(tours[0]);
+//   // tours[0].save();
+
+//   tours.forEach(async (tour) => {
+//     await Tour.validate(tour);
+//     tour.save();
+//   });
+
+//   res.status(200).json({
+//     status: 'success',
+//     tour: tours[0],
+//   });
+// });

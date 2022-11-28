@@ -14,6 +14,8 @@ const reviewRouter = require('./reviewRoutes');
 
 router.use('/:tourId/reviews', reviewRouter);
 
+// router.route('/saveall').post(tourController.saveAll);
+
 router.route('/tour-stats').get(tourController.getTourStats);
 
 router
