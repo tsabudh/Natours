@@ -7,6 +7,7 @@ const helmet = require('helmet');
 const morgan = require('morgan');
 
 const rateLimit = require('express-rate-limit');
+const cookieParser = require('cookie-parser');
 
 // const mongoSanitize = require('express-mongo-sanitize');
 
@@ -48,6 +49,7 @@ app.use('/api/v1', limiter);
 
 // Body Parser, reading data from body into req.body
 app.use(express.json({ limit: '10kb' }));
+app.use(cookieParser());
 
 //  MONGOSANITIZE AND XSS IS NOT WORKING....
 // Data sanitization against NoSQL query injection
@@ -74,6 +76,15 @@ app.use('/', (req, res, next) => {
   req.requestTime = new Date().toISOString();
   // console.log(req.headers);
 
+  next();
+});
+
+// This is to edit the meta content-security-policy because it did not took the following script source even when explicitly defined
+app.use('/', (req, res, next) => {
+  res.setHeader(
+    'Content-Security-Policy',
+    "script-src 'self' https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"
+  );
   next();
 });
 
