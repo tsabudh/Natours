@@ -257,7 +257,7 @@ exports.updatePassword = async (req, res, next) => {
 
 // Only for rendered pages, and no errors!
 exports.isLoggedIn = catchAsync(async (req, res, next) => {
-  console.log('isLoggedIn');
+  // console.log('isLoggedIn');
 
   if (req.cookies.jwt) {
     // 1) Verify the token

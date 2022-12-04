@@ -3,7 +3,7 @@ html
     head 
         block head
             meta( charset = 'UTF-8')
-            meta(http-equiv="Content-Security-Policy" content="default-src 'self' ; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com/ https://fonts.gstatic.com/; media-src *; script-src-elem 'unsafe-inline' 'unsafe-eval'  https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js http://127.0.0.1:3000/js/mapbox.js http://127.0.0.1:3000/js/login.js ;script-src 'self' 'unsafe-inline' 'unsafe-eval'; object-src 'self' ;  font-src https://fonts.gstatic.com/s/lato/v23/ 'unsafe-inline' ")
+            meta(http-equiv="Content-Security-Policy" content="default-src *")
             META( name='viewport' content='width=device-width, initial-scale=1.0')
             link( rel ='stylesheet' href='/css/style.css')
             link( rel='shortcut icon' type='image/png' href='/img/favicon.png')
@@ -22,7 +22,9 @@ html
         // FOOTER
         include _footer
         
-        script(src='https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js')
-        //- script(src='https://unpkg.com/axios/dist/axios.min.js')
-        script(src='/js/mapbox.js')
-        script(src='/js/login.js')
+        //- script(src='https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js')
+        //- //- script(src='https://unpkg.com/axios/dist/axios.min.js')
+        //- script(src='/js/mapbox.js')
+        //- script(src='/js/login.js')
+
+        script(src='/js/bundle.js')
