@@ -3,7 +3,7 @@
 import '@babel/polyfill';
 
 import { login, logout } from './login';
-import { updateData } from './updateSettings';
+import { updateData, updateSettings } from './updateSettings';
 
 function submitForm(e) {
   e.preventDefault();
@@ -16,7 +16,7 @@ function submitForm(e) {
 const loginForm = document.querySelector('.form--login');
 const logOutBtn = document.querySelector('.nav__el--logout');
 const userDataForm = document.querySelector('.form-user-data');
-console.log(logOutBtn);
+const userPasswordForm = document.querySelector('.form-user-password');
 
 if (loginForm) {
   loginForm.addEventListener('submit', submitForm);
@@ -29,12 +29,35 @@ if (logOutBtn) {
 }
 
 if (userDataForm) {
-  userDataForm.addEventListener('submit', (e) => {
-    console.log('form user data clicked');
+  userDataForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     const email = document.getElementById('email').value;
     const name = document.getElementById('name').value;
-    console.log(name, email);
-    updateData(name, email);
+    // updateData(name, email);
+    await updateSettings({ name, email }, 'data');
+  });
+}
+
+if (userPasswordForm) {
+  userPasswordForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    userPasswordForm.querySelector('.btn-save-password').textContent =
+      'Updating..';
+    const passwordCurrent = document.getElementById('password-current').value;
+    const password = document.getElementById('password').value;
+    const passwordConfirm = document.getElementById('password-confirm').value;
+    await updateSettings(
+      { passwordCurrent, password, passwordConfirm },
+      'password'
+    );
+    userPasswordForm.querySelector('.btn-save-password').textContent =
+      'Save Password';
+
+    // password = passwordConfirm = passwordCurrent = ''; why this is causing the following code to not execute??
+
+    document.getElementById('password-current').value = '';
+    document.getElementById('password').value = '';
+    document.getElementById('password-confirm').value = '';
   });
 }
