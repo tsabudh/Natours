@@ -74,19 +74,19 @@ exports.updateMe = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.resizeUserImage = (req, res, next) => {
+exports.resizeUserImage = catchAsync(async (req, res, next) => {
   if (!req.file) return next();
 
-  req.file.filename = `user-${req.user.id}-${Date.now()}`;
+  req.file.filename = `user-${req.user.id}-${Date.now()}.jpeg`;
 
-  sharp(req.file.buffer)
+  await sharp(req.file.buffer)
     .resize(500, 500)
     .toFormat('jpeg')
     .jpeg(90)
     .toFile(`public/img/users/${req.file.filename}`);
 
   next();
-};
+});
 
 exports.deleteMe = catchAsync(async (req, res, next) => {
   await User.findByIdAndUpdate(req.user.id, { active: false });
