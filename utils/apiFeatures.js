@@ -26,7 +26,7 @@ class APIfeatures {
   sort() {
     //  2) SORTING   queryObject.sort('property1 property2');
     if (this.queryString.sort) {
-      const sortBy = this.queryString.sort.split(',').join(' '); //eg: 'price ratingsAverage
+      const sortBy = this.queryString.sort.split(',').join(' '); //eg: 'price ratingsAverage'
       this.query = this.query.sort(sortBy);
     } else {
       // query = query.sort('-createdAt');
@@ -40,7 +40,7 @@ class APIfeatures {
     // 3) LIMITING FIELDS
     if (this.queryString.fields) {
       const fields = this.queryString.fields.split(',').join(' ');
-      this.query = this.query.select(fields);
+      this.query = this.query.select(fields); //eg: 'name price destination'
     } else {
       this.query = this.query.select('-__v');
     }
