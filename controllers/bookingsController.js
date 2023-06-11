@@ -1,28 +1,61 @@
-const multer = require('multer');
-const sharp = require('sharp');
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 const Tour = require('../models/tourModel');
+const Booking = require('../models/bookingModel');
+
 const catchAsync = require('../utils/catchAsync');
 const factory = require('./handlerFactory');
 const AppError = require('../utils/appError');
 
-exports.getCheckoutSession = (req, res, next) => {
+exports.getCheckoutSession = catchAsync(async (req, res, next) => {
   // 1 Get currently booked tour
-  const tour = Tour.findById(req.params.tourID);
+  const tour = await Tour.findById(req.params.tourId);
 
   // 2 Create checkout session
-  stripe.checkout.session.create({
+  const session = await stripe.checkout.sessions.create({
+    mode: 'payment',
+    success_url: `${req.protocol}://${req.get('host')}/?tour=${
+      req.params.tourId
+    }&user=${req.user.id}&price=${tour.price}`,
+    cancel_url: `${req.protocol}://${req.get('host')}/`,
+    customer_email: req.user.email,
+    client_reference_id: req.params.tourId,
     line_items: [
       {
-        // Provide the exact Price ID (for example, pr_1234) of the product you want to sell
-        price: '{{PRICE_ID}}',
+        price_data: {
+          unit_amount: tour.price * 100,
+          currency: 'usd',
+
+          product_data: {
+            name: `${tour.name} Tour`,
+            description: tour.summary,
+            images: ['https://tsabudh.com.np/natours-static/img/nat-6.jpg'],
+          },
+        },
         quantity: 1,
       },
     ],
-    mode: 'payment',
-    success_url: `${YOUR_DOMAIN}/success.html`,
-    cancel_url: `${YOUR_DOMAIN}/cancel.html`,
   });
 
   // 3 Create session as response
-};
+
+  res.status(200).json({
+    status: 'success',
+    session,
+  });
+});
+
+exports.createBookingCheckout = catchAsync(async (req, res, next) => {
+  //! This is unsecure, everyone can make bookings without paying
+  const { tour, user, price } = req.query;
+
+  if (!tour && !user && !price) return next();
+  console.log('tour user price query detected');
+  console.log(tour)
+
+  await Booking.create({
+    user,
+    tour,
+    price,
+  });
+  res.redirect(req.originalUrl.split('?')[0]);
+});

@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+const cors = require('cors');
 
 const app = express();
 const helmet = require('helmet');
@@ -22,14 +23,17 @@ const tourRouter = require('./routes/tourRoutes');
 const userRouter = require('./routes/userRoutes');
 const reviewRouter = require('./routes/reviewRoutes');
 const viewRouter = require('./routes/viewRoutes');
+const bookingsRouter = require('./routes/bookingsRoutes');
 
 // 1) GLOBAL MIDDLEWARES
 app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'views'));
 
+app.use(cors());
+
 // Serving Static Files
 app.use(express.static(`public`));
-console.log(__dirname);
+
 // app.use(express.static(path.join(__dirname, 'public')));
 //Set Security HTTP Headers
 app.use(helmet());
@@ -82,11 +86,15 @@ app.use('/', (req, res, next) => {
 });
 
 // This is to edit the meta content-security-policy because it did not took the following script source even when explicitly defined
-app.use('/', (req, res, next) => {
+app.use('*', (req, res, next) => {
   res.setHeader(
     'Content-Security-Policy',
-    "script-src 'self' https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"
+    "script-src-elem 'self' https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js https://js.stripe.com/v3/ *; style-src 'self' *"
   );
+  res.setHeader('Cross-Origin-Embedder-Policy', '*');
+  res.setHeader('Cross-Origin-Opener-Policy', '*');
+  res.setHeader('Cross-Origin-Resource-Policy', 'cross-origin');
+
   next();
 });
 
@@ -95,6 +103,7 @@ app.use('/', viewRouter);
 app.use('/api/v1/tours/', tourRouter);
 app.use('/api/v1/users/', userRouter);
 app.use('/api/v1/reviews/', reviewRouter);
+app.use('/api/v1/bookings/', bookingsRouter);
 
 //error handling
 app.all('*', (req, res, next) => {

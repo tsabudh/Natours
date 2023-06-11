@@ -38,7 +38,7 @@ export const logout = async () => {
 
     if (response.data.status == 'success') {
       // console.log(location);
-      // location.assign(location.origin);
+      location.assign(location.origin);
     }
   } catch (err) {
     console.log('catch block of logout function');
