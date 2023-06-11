@@ -28,8 +28,9 @@ app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'views'));
 
 // Serving Static Files
-// app.use(express.static(`${__dirname}/public`));
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(`public`));
+console.log(__dirname);
+// app.use(express.static(path.join(__dirname, 'public')));
 //Set Security HTTP Headers
 app.use(helmet());
 

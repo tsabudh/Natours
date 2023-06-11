@@ -3,3 +3,4 @@ config.env
 reference.txt
 .cache/
 public/js/bundle.js
+.vscode/

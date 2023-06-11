@@ -40,7 +40,7 @@ const sendErrorProd = (err, req, res) => {
         message: `Error: 💥💥💥💥 ${err.message}`,
       });
     }
-    //PROGRAMMING and other unknown error, dont send message to client
+    //PROGRAMMING and other unknown error, don't send message to client
     //send generic message
     return res.status(500).json({
       status: 'error',
@@ -56,7 +56,7 @@ const sendErrorProd = (err, req, res) => {
       msg: err.message,
     });
   }
-  //PROGRAMMING and other unknown error, dont send message to client
+  //PROGRAMMING and other unknown error, don't send message to client
   return res.status(500).json({
     status: 'error',
     message: 'Something went very wrong!',

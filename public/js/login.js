@@ -36,7 +36,10 @@ export const logout = async () => {
     });
     console.log('try block of logout function');
 
-    if (response.data.status == 'success') location.reload(true);
+    if (response.data.status == 'success') {
+      // console.log(location);
+      // location.assign(location.origin);
+    }
   } catch (err) {
     console.log('catch block of logout function');
     showAlert('error', 'Error logging out! Try again');

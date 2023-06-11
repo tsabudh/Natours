@@ -4,7 +4,8 @@ const { promisify } = require('util');
 const User = require('../models/userModel');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
-const sendEmail = require('../utils/email');
+// const sendEmail = require('../utils/email');
+const Email = require('../utils/email');
 
 const signToken = (id) =>
   jwt.sign({ id }, process.env.JWT_SECRET, {
@@ -17,11 +18,11 @@ const createSendToken = (user, statusCode, res) => {
     expires: new Date(
       Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
     ),
-    secure: true,
-    httpOnly: true,
+    // secure: true,
+    // httpOnly: true,
   };
-
   if (process.env.NODE_ENV === 'production') cookieOptions.secure = true;
+
   res.cookie('jwt', token, cookieOptions);
   user.password = undefined;
   res.status(statusCode).json({
@@ -34,22 +35,32 @@ const createSendToken = (user, statusCode, res) => {
 };
 
 exports.signup = catchAsync(async (req, res, next) => {
+  
   const { email } = req.body;
   // CONTINUE FROM HERECONTINUE FROM HERECONTINUE FROM HERECONTINUE FROM HERECONTINUE FROM HERECONTINUE FROM HERECONTINUE FROM HERECONTINUE FROM HERECONTINUE FROM HERE
   const existingUser = await User.findOne({ email });
 
-  console.log(req.body.email);
-  console.log(existingUser);
+
   // console.log(existingUser.active); FIGURE OUT TO SIGN IN FOR TEMPORARILY INACTIVE USERS
   if (existingUser) {
-    existingUser.update({
-      name: req.body.name,
-      active: true,
-      role: req.body.role,
-      password: req.body.password,
-      passwordConfirm: req.body.passwordConfirm,
-    });
-    createSendToken(existingUser, 201, res);
+    if (existingUser.active === false) {
+      existingUser.update({
+        name: req.body.name,
+        active: true,
+        role: req.body.role,
+        password: req.body.password,
+        passwordConfirm: req.body.passwordConfirm,
+      });
+
+      createSendToken(existingUser, 201, res);
+    } else if (existingUser.active === true) {
+      // res.redirect(`${req.protocol}://${req.get('host')}/login`);
+      res.status(400).json({
+        status: 'failure',
+        message: 'This email is already registered. Forgot Password?',
+        code: 'email-already-registered',
+      });
+    }
   } else {
     console.log('else block');
 
@@ -61,6 +72,14 @@ exports.signup = catchAsync(async (req, res, next) => {
       passwordConfirm: req.body.passwordConfirm,
       role: req.body.role,
     });
+
+    // send welcome email to user
+    const url = `${req.protocol}://${req.get('host')}/me`;
+    await new Email(
+      { email: req.body.email, name: req.body.name },
+      url
+    ).sendWelcome();
+
     createSendToken(newUser, 201, res);
   }
 });
@@ -84,7 +103,7 @@ exports.login = catchAsync(async (req, res, next) => {
   // const token = signToken(user._id);
 
   // res.status(200).json({
-  //   data: { status: 'success', token },
+  //   data: { status: 'sucess', token },
   // });
 });
 
@@ -93,6 +112,7 @@ exports.logout = (req, res) => {
     expires: new Date(Date.now() + 10 * 1000),
     httpOnly: true,
   });
+
   res.status(200).json({ status: 'success' });
 };
 
@@ -107,6 +127,11 @@ exports.protect = catchAsync(async (req, res, next) => {
     token = req.headers.authorization.split(' ')[1];
   } else if (req.cookies.jwt) {
     token = req.cookies.jwt;
+    if (token === 'loggedout') {
+      //* issue while logging out from "/me" solved by redirecting to "/"
+      res.redirect('/');
+      next();
+    }
   }
 
   if (!token) {
@@ -161,7 +186,6 @@ exports.restrictTo =
 
 exports.forgotPassword = catchAsync(async (req, res, next) => {
   // 1) Get user based on POSTed email
-
   const user = await User.findOne({ email: req.body.email });
 
   if (!user) {
@@ -169,24 +193,16 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
   }
 
   // 2) Generate the random reset password token
-
   const resetToken = user.createPasswordResetToken();
   await user.save({ validateBeforeSave: false });
 
   // 3) Send it to user's email
-
-  const resetURL = `${req.protocol}://${req.get(
-    'host'
-  )}/api/v1/users/resetPassword/${resetToken}`;
-
-  const message = `Forgot your password? Submit a PATCH request with your new password and passwordConfirm to : ${resetURL}. \n If you didn't forget your password ignore this email.`;
-
   try {
-    await sendEmail({
-      email: user.email,
-      subject: 'Your password reset token(valid for 10 minutes',
-      message,
-    });
+    const resetURL = `${req.protocol}://${req.get(
+      'host'
+    )}/api/v1/users/resetPassword/${resetToken}`;
+
+    await new Email(user, resetURL).sendPasswordReset();
   } catch (err) {
     user.passwordResetToken = undefined;
     user.passwordResetTokenExpires = undefined;
@@ -219,28 +235,31 @@ exports.resetPassword = async (req, res, next) => {
     passwordResetTokenExpires: { $gt: Date.now() },
   });
 
-  // Step 2) If token has not expired, and there is a userm set the new password
+  // Step 2) If token has not expired, and there is a user, set the new password
 
   if (!user) {
     return next(new AppError('Token is invalid or has expired', 400));
   }
 
-  user.password = req.body.password;
-  user.passwordConfirm = req.body.passwordConfirm;
+  try {
+    user.password = req.body.password;
+    user.passwordConfirm = req.body.passwordConfirm;
 
-  user.passwordResetToken = undefined;
-  user.passwordResetTokenExpires = undefined;
+    user.passwordResetToken = undefined;
+    user.passwordResetTokenExpires = undefined;
 
-  await user.save();
-  // step 3) Update changedPasswordAt property for the user
+    await user.save();
+    // step 3) Update changedPasswordAt property for the user (done at userModel)
 
-  // Step 4) Log the user in, send JWT
-  createSendToken(user, 200, res);
-  // const token = signToken(user._id);
-  // res.status(200).json({
-  //   status: 'success',
-  //   token,
-  // });
+    // Step 4) Log the user in, send JWT
+    createSendToken(user, 200, res);
+  } catch (error) {
+    console.log(error.message);
+    res.status(400).json({
+      status: 'failure',
+      message: error.message,
+    });
+  }
 };
 
 exports.updatePassword = async (req, res, next) => {
@@ -264,7 +283,7 @@ exports.updatePassword = async (req, res, next) => {
   createSendToken(user, 200, res);
 };
 
-// Only for rendered pages, and no errors!
+// Only for rendered pages, and no errors
 exports.isLoggedIn = async (req, res, next) => {
   // console.log('isLoggedIn');
 
@@ -291,7 +310,7 @@ exports.isLoggedIn = async (req, res, next) => {
       res.locals.user = currentUser;
       return next();
     } catch (err) {
-      return next(err);
+      return next();
     }
   }
   next();
