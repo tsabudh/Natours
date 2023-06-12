@@ -1,6 +1,5 @@
 //PROCESS ENVIRONMENT
 const dotenv = require('dotenv');
-
 const mongoose = require('mongoose');
 
 process.on('uncaughtException', (err) => {
