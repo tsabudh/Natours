@@ -62,7 +62,7 @@ exports.signup = catchAsync(async (req, res, next) => {
       });
     }
   } else {
-    console.log('else block');
+  
 
     const newUser = await User.create({
       //If a field has DEFAULT value, then the field is CREATED ANYWAY
@@ -254,7 +254,6 @@ exports.resetPassword = async (req, res, next) => {
     // Step 4) Log the user in, send JWT
     createSendToken(user, 200, res);
   } catch (error) {
-    console.log(error.message);
     res.status(400).json({
       status: 'failure',
       message: error.message,

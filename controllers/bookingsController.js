@@ -4,7 +4,6 @@ const Booking = require('../models/bookingModel');
 
 const catchAsync = require('../utils/catchAsync');
 const factory = require('./handlerFactory');
-const AppError = require('../utils/appError');
 
 exports.getCheckoutSession = catchAsync(async (req, res, next) => {
   // 1 Get currently booked tour
@@ -49,8 +48,6 @@ exports.createBookingCheckout = catchAsync(async (req, res, next) => {
   const { tour, user, price } = req.query;
 
   if (!tour && !user && !price) return next();
-  console.log('tour user price query detected');
-  console.log(tour)
 
   await Booking.create({
     user,
@@ -59,3 +56,11 @@ exports.createBookingCheckout = catchAsync(async (req, res, next) => {
   });
   res.redirect(req.originalUrl.split('?')[0]);
 });
+
+
+
+exports.getAllBookings = factory.getAll(Booking);
+exports.createBooking = factory.createOne(Booking);
+exports.getBooking = factory.getOne(Booking);
+exports.updateBooking = factory.updateOne(Booking);
+exports.deleteBooking = factory.deleteOne(Booking);

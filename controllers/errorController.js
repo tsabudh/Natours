@@ -105,7 +105,7 @@ module.exports = (err, req, res, next) => {
     //   '%%00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000'
     // );
 
-    if (error.name === 'ValidatonError') error = handleValidationErrorDB(error);
+    if (error.name === 'ValidationError') error = handleValidationErrorDB(error);
 
     if (error.errors) {
       Object.values(error.errors)
@@ -118,7 +118,6 @@ module.exports = (err, req, res, next) => {
           }
         });
     }
-    console.log(error);
     if (error.name === 'JsonWebTokenError') error = handleJWTError();
     if (error.name === 'TokenExpiredError') error = handleJWTExpiredError();
 

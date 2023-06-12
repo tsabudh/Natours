@@ -50,7 +50,7 @@ exports.resizeTourImages = async (req, res, next) => {
 
       await sharp(req.files.images[i].buffer)
         .resize(2000, 1333)
-        .toFormat('jepg')
+        .toFormat('jpeg')
         .jpeg({ quality: 90 })
         .toFile(`public/img/tours/${imageCoverFilename}`);
 
@@ -190,7 +190,6 @@ exports.getToursWithin = catchAsync(async (req, res, next) => {
   const tours = await Tour.find({
     startLocation: { $geoWithin: { $centerSphere: [[lng, lat], radius] } },
   });
-  console.log(tours);
   res.status(200).json({
     status: 'success',
     results: tours.length,

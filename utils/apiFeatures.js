@@ -49,7 +49,7 @@ class APIfeatures {
   }
 
   paginate() {
-    // 4) PAGINGINATION DEFAULT_LIMIT
+    // 4) PAGINATION DEFAULT_LIMIT
 
     const page = this.queryString.page * 1 || 1;
     const limit = this.queryString.limit * 1 || 3;

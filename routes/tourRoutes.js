@@ -14,7 +14,6 @@ const reviewRouter = require('./reviewRoutes');
 
 router.use('/:tourId/reviews', reviewRouter);
 
-// router.route('/saveall').post(tourController.saveAll);
 
 router.route('/tour-stats').get(tourController.getTourStats);
 
@@ -33,8 +32,6 @@ router
 router
   .route('/tours-within/:distance/center/:latlng/unit/:unit')
   .get(tourController.getToursWithin);
-//  /tours-distance?distance=233&center=-40,34&unit=miles
-// /tours-distance/233/cnter/-40,34/unit/miles
 
 router.route('/distances/:latlng/unit/:unit').get(tourController.getDistances);
 

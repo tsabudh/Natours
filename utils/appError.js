@@ -6,7 +6,7 @@ class AppError extends Error {
     this.isOperational = true;
 
     Error.captureStackTrace(this, this.constructor);
-    console.log(' from appError');
+    console.log('AppError instance');
   }
 }
 module.exports = AppError;

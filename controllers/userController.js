@@ -54,7 +54,7 @@ exports.updateMe = catchAsync(async (req, res, next) => {
   }
 
   // 2) Filtered out unwanted fields names that are not allowed to be updated
-  //we use filteredBody instead of user.body because user might send role:admin in body, we dont want that
+  //we use filteredBody instead of user.body because user might send role:admin in body, we don't want that
 
   const filteredBody = filterObj(req.body, 'name', 'email');
 

@@ -31,7 +31,7 @@ const reviewSchema = new mongoose.Schema(
 
   {
     toJSON: { virtuals: true },
-    toObject: { vitruals: true },
+    toObject: { virtuals: true },
   }
 );
 
@@ -89,7 +89,7 @@ reviewSchema.post('save', function () {
 });
 
 //findByIdAndUpdate
-//findByIdAndDelete are query middleware and do not have access to documents like document middlewares like 'save'
+//findByIdAndDelete are query middleware and do not have access to documents like document middleware like 'save'
 reviewSchema.pre(/^findOneAnd/, async function (next) {
   //here "this" keyword points to current query because 'findOneAndSave' is being queried
   this.temporaryReview = await this.findOne();
@@ -101,7 +101,6 @@ reviewSchema.pre(/^findOneAnd/, async function (next) {
 reviewSchema.post(/^findOneAnd/, async function () {
   // await this.findOne(); does not work here because the query is already executed at this point, ie: post
   // console.log(this);
-  console.log(this.temporaryReview.constructor);
   await this.temporaryReview.constructor.calcAverageRatings(
     this.temporaryReview.tour
   );
@@ -110,9 +109,4 @@ const Review = mongoose.model('Review', reviewSchema);
 
 module.exports = Review;
 
-// POST /tour/idoftour/reviews
-// GET tour/idoftour/reviews
-// GET tour/idoftour/reviews/reviewid1322
 
-// just like this we have tour id right in URL
-// and get user id from user logs
