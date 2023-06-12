@@ -1,8 +1,0 @@
-node_modules/
-config.env
-reference.txt
-.cache/
-public/js/bundle.js
-.vscode/
-.gitattributes
-.prettierrc
