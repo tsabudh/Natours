@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "Learning Express Node MongoDb",
   "main": "app.js",
-  
   "scripts": {
     "start": "node server.js",
     "dev": "nodemon server.js",
@@ -12,7 +11,7 @@
     "debug:prod": " ndb SET NODE_ENV=production server.js",
     "watch:js": "parcel watch ./public/js/index.js --out-dir ./public/js --out-file bundle.js  ",
     "build:js": "parcel build ./public/js/index.js --out-dir ./public/js --out-file bundle.js  ",
-    "build":"netlify deploy --prod"
+    "build": "netlify deploy --prod"
   },
   "author": "Sabudh Bahadur Thapa",
   "license": "ISC",
@@ -31,6 +30,7 @@
     "hpp": "^0.2.3",
     "html-to-text": "^9.0.5",
     "jsonwebtoken": "^8.5.1",
+    "libvips": "^0.0.2",
     "mongoose": "^5.13.14",
     "morgan": "^1.10.0",
     "multer": "^1.4.5-lts.1",
@@ -39,7 +39,7 @@
     "nodemailer": "^6.7.8",
     "pug": "^3.0.2",
     "serverless-http": "^3.2.0",
-    "sharp": "^0.31.2",
+    "sharp": "^0.32.1",
     "slugify": "^1.6.5",
     "stripe": "^12.9.0",
     "validator": "^13.7.0",
@@ -58,6 +58,6 @@
     "prettier": "^2.7.1"
   },
   "engines": {
-    "node": ">=10.0.0"
+    "node": ">=18.16.0"
   }
 }

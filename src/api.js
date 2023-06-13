@@ -1,12 +1,12 @@
 const serverless = require("serverless-http");
 const express = require("express");
+const dotenv = require('dotenv');
+const mongoose = require('mongoose');
 const app = require("../app");
 
 
-//PROCESS ENVIRONMENT
-const dotenv = require('dotenv');
-const mongoose = require('mongoose');
 
+//PROCESS ENVIRONMENT
 process.on('uncaughtException', (err) => {
   console.log(err.status, err.message);
   console.log('UNCAUGHT EXCEPTION!💥💥 Shutting down...!');

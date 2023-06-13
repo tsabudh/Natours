@@ -6,6 +6,8 @@ import { login, logout } from './login';
 import { updateSettings } from './updateSettings';
 import { bookTour } from './stripe';
 
+export const netlifyAPIRoute = "/.netlify/functions/api"; //! NETLIFY API ROUTE
+
 function submitForm(e) {
   e.preventDefault();
   const email = document.getElementById('email').value;
@@ -13,7 +15,7 @@ function submitForm(e) {
   login(email, password);
 }
 
-//DOM ELEMENTS *********************************************************************************
+//DOM ELEMENTS 
 const loginForm = document.querySelector('.form--login');
 const logOutBtn = document.querySelector('.nav__el--logout');
 const userDataForm = document.querySelector('.form-user-data');

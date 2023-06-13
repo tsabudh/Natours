@@ -2,14 +2,15 @@
 
 import axios from 'axios';
 import { showAlert } from './alerts';
+import { netlifyAPIRoute } from './index';
 
 //type is either 'data' or 'password'
 export const updateSettings = async (data, type) => {
   try {
     const url =
       type === 'password'
-        ? '/api/v1/users/updateMyPassword'
-        : '/api/v1/users/updateMe';
+        ? `${netlifyAPIRoute}/api/v1/users/updateMyPassword`
+        : `${netlifyAPIRoute}/api/v1/users/updateMe`;
 
     const res = await axios({
       method: 'PATCH',
@@ -29,7 +30,7 @@ export const updateData = async (name, email) => {
   try {
     const res = await axios({
       method: 'PATCH',
-      url: '/api/v1/users/updateMe',
+      url: `${netlifyAPIRoute}/api/v1/users/updateMe`,
       data: {
         name,
         email,

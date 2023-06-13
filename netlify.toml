@@ -1,8 +1,18 @@
 [build]
-functions = "functions"
+  functions = "src"
+  publish = "public/"
 
-[[redirects]]
-  from = "/*"
-  to = "/.netlify/functions/index"
-  status = 200
-  force = true
+[functions]
+  included_files = ["views/**"]
+
+#[[redirects]]
+ # from = "/*"
+  #to = "/.netlify/functions/api/:splat"
+
+
+  
+
+[dev]
+  functions = "src"
+  publish = "public/"
+  targetPort = 3000
