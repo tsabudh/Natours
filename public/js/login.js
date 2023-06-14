@@ -19,7 +19,7 @@ export const login = async (email, password) => {
 
     if (response.data.status === "success") {
       showAlert("success", "Logged in successfully!");
-      window.setTimeout(() => location.assign(netlifyAPIRoute), 1500);
+      window.setTimeout(() => location.assign(netlifyAPIRoute), 500);
     }
   } catch (err) {
     console.log("axios error login function");
@@ -38,11 +38,11 @@ export const logout = async () => {
       method: "GET",
       url: `${netlifyAPIRoute}/api/v1/users/logout`,
     });
-    console.log("try block of logout function");
-
+    console.log(response);
     if (response.data.status == "success") {
-      // console.log(location);
-      location.assign(location.origin);
+      console.log(location.origin);
+
+      location.assign(`${location.origin}${netlifyAPIRoute}`);
     }
   } catch (err) {
     console.log("catch block of logout function");

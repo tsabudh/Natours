@@ -5,8 +5,8 @@ include _reviewCard
 block append head 
     script(src='https://js.stripe.com/v3/'  type="text/javascript")
 
-mixin overviewBox(description, text, icon)
-    .overview-box__detail
+mixin overviewBox(description, text, icon, hoverText)
+    .overview-box__detail(title=`${hoverText}`)
         svg.overview-box__icon
             use(xlink:href=`/img/icons.svg#icon-${icon}` unsafe-inline)
         span.overview-box__label= label
@@ -38,10 +38,10 @@ block content
 
                 h2.heading-secondary.ma-bt-lg Quick facts
                 - const date = tour.startDates[0].toLocaleString('en-us', { month: 'long', year: 'numeric'});
-                +overviewBox('Next date', date, 'calendar')
-                +overviewBox('Difficulty', tour.difficulty, 'trending-up')
-                +overviewBox('Participants', `${tour.maxGroupSize} people`, 'user')
-                +overviewBox('Rating', `${tour.ratingsAverage} / 5`, 'star')
+                +overviewBox('Next date', date, 'calendar','Next available tour date.')
+                +overviewBox('Difficulty', tour.difficulty, 'trending-up','Level of difficulty.')
+                +overviewBox('Participants', `${tour.maxGroupSize} people`, 'user','Maximum group size.')
+                +overviewBox('Rating', `${tour.ratingsAverage} / 5`, 'star','Average user ratings.')
 
 
             .overview-box__group

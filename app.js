@@ -31,6 +31,7 @@ app.use(cors());
 app.use(compression());
 
 // Serving Static Files
+app.use(cookieParser());
 app.use(express.static(`public`));
 
 //Set Security HTTP Headers
@@ -52,7 +53,6 @@ app.use("/api/v1", limiter);
 // Body Parser, reading data from body into req.body
 app.use(express.json({ limit: "10kb" }));
 app.use(express.urlencoded({ extended: true, limit: "10kb" }));
-app.use(cookieParser());
 
 //  MONGO SANITIZE AND XSS IS NOT WORKING....
 // Data sanitization against NoSQL query injection
@@ -92,15 +92,6 @@ app.use("*", (req, res, next) => {
   next();
 });
 
-//* NETLIFY
-// const router = express.Router();
-// router.get('/hello', (req, res) => res.send('Hello World!'));
-
-// app.use('/api/', router);
-// // eslint-disable-next-line import/prefer-default-export
-// export const handler = serverless(app);
-
-
 //* 2) DEFINE ROUTES
 // app.use("/", viewRouter);
 // app.use("/api/v1/tours/", tourRouter);
@@ -123,12 +114,8 @@ app.all("*", (req, res, next) => {
   );
 });
 
-
-
 //* 3) DEFINE GLOBAL ERROR HANDLER
 app.use(globalErrorHandler);
 
 //* 4) START SERVER ON SERVER.JS
-module.exports= app;
-
-
+module.exports = app;

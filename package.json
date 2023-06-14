@@ -11,7 +11,8 @@
     "debug:prod": " ndb SET NODE_ENV=production server.js",
     "watch:js": "parcel watch ./public/js/index.js --out-dir ./public/js --out-file bundle.js  ",
     "build:js": "parcel build ./public/js/index.js --out-dir ./public/js --out-file bundle.js  ",
-    "build": "netlify deploy --prod"
+    "build": "netlify deploy --prod",
+    "netlify": "netlify build && netlify deploy --prod"
   },
   "author": "Sabudh Bahadur Thapa",
   "license": "ISC",

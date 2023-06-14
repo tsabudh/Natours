@@ -11849,7 +11849,7 @@ var login = /*#__PURE__*/function () {
               (0, _alerts.showAlert)("success", "Logged in successfully!");
               window.setTimeout(function () {
                 return location.assign(_index.netlifyAPIRoute);
-              }, 1500);
+              }, 500);
             }
             _context.next = 12;
             break;
@@ -11889,10 +11889,10 @@ var logout = /*#__PURE__*/function () {
             });
           case 4:
             response = _context2.sent;
-            console.log("try block of logout function");
+            console.log(response);
             if (response.data.status == "success") {
-              // console.log(location);
-              location.assign(location.origin);
+              console.log(location.origin);
+              location.assign("".concat(location.origin).concat(_index.netlifyAPIRoute));
             }
             _context2.next = 13;
             break;
@@ -12329,7 +12329,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61334" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52083" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

@@ -15,4 +15,4 @@
 [dev]
   functions = "src"
   publish = "public/"
-  targetPort = 3000
+  targetPort = 5713

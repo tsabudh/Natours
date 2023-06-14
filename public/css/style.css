@@ -474,7 +474,9 @@ body {
   -ms-flex-align: center;
   align-items: center;
   font-weight: 400;
+  cursor:help;
 }
+
 .overview-box__detail svg {
   margin-right: 1.25rem;
 }
@@ -1187,6 +1189,7 @@ body {
 }
 .card__footer-value {
   font-weight: 700;
+  color:#20bf6b;
 }
 .card__footer-text {
   color: #999;
