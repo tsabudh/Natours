@@ -93,17 +93,17 @@ app.use("*", (req, res, next) => {
 });
 
 //* 2) DEFINE ROUTES
-// app.use("/", viewRouter);
-// app.use("/api/v1/tours/", tourRouter);
-// app.use("/api/v1/users/", userRouter);
-// app.use("/api/v1/reviews/", reviewRouter);
-// app.use("/api/v1/bookings/", bookingsRouter);
+app.use("/", viewRouter);
+app.use("/api/v1/tours/", tourRouter);
+app.use("/api/v1/users/", userRouter);
+app.use("/api/v1/reviews/", reviewRouter);
+app.use("/api/v1/bookings/", bookingsRouter);
 
-app.use("/.netlify/functions/api/", viewRouter);
-app.use("/.netlify/functions/api/api/v1/tours/", tourRouter);
-app.use("/.netlify/functions/api/api/v1/users/", userRouter);
-app.use("/.netlify/functions/api/api/v1/reviews/", reviewRouter);
-app.use("/.netlify/functions/api/api/v1/bookings/", bookingsRouter);
+// app.use("/.netlify/functions/api/", viewRouter);
+// app.use("/.netlify/functions/api/api/v1/tours/", tourRouter);
+// app.use("/.netlify/functions/api/api/v1/users/", userRouter);
+// app.use("/.netlify/functions/api/api/v1/reviews/", reviewRouter);
+// app.use("/.netlify/functions/api/api/v1/bookings/", bookingsRouter);
 
 // Error Handling for Undefined Routes
 app.all("*", (req, res, next) => {

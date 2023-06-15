@@ -21,13 +21,14 @@ const createSendToken = (user, statusCode, res, isLoggingIn) => {
     );
   } else {
     expireDate = new Date(Date.now() + 1000);
+    // res.redirect('/.netlify/functions/api/login')
   }
   const cookieOptions = {
     expires: expireDate,
     secure: true,
     httpOnly: true,
   };
-  
+
   res.cookie("jwt", token, cookieOptions);
   user.password = undefined;
   res.status(statusCode).json({
@@ -41,7 +42,6 @@ const createSendToken = (user, statusCode, res, isLoggingIn) => {
 
 exports.signup = catchAsync(async (req, res, next) => {
   const { email } = req.body;
-  // CONTINUE FROM HERECONTINUE FROM HERECONTINUE FROM HERECONTINUE FROM HERECONTINUE FROM HERECONTINUE FROM HERECONTINUE FROM HERECONTINUE FROM HERECONTINUE FROM HERE
   const existingUser = await User.findOne({ email });
 
   // console.log(existingUser.active); FIGURE OUT TO SIGN IN FOR TEMPORARILY INACTIVE USERS
@@ -130,6 +130,11 @@ exports.protect = catchAsync(async (req, res, next) => {
   }
 
   if (!token) {
+    // setTimeout(() => {
+    //   res.redirect("/.netlify/functions/api/login");
+    // }, 500);
+
+    // next();
     next(
       new AppError("You are not logged in. Please log in to get access", 401)
     );
@@ -279,8 +284,6 @@ exports.updatePassword = async (req, res, next) => {
 
 // Only for rendered pages, and no errors
 exports.isLoggedIn = async (req, res, next) => {
-  // console.log('isLoggedIn');
-
   if (req.cookies.jwt) {
     try {
       // 1) Verify the token
@@ -304,8 +307,9 @@ exports.isLoggedIn = async (req, res, next) => {
       res.locals.user = currentUser;
       return next();
     } catch (err) {
+      // res.locals.user = null;
       return next();
     }
-  }
+  } 
   next();
 };

@@ -1,0 +1,25 @@
+@mixin respond($breakpoint) {
+  //In media queries 1rem or 1em is defined by browser
+
+  @if ($breakpoint == "phone") {
+    @media screen and (max-width: $phone-size) {
+      @content;
+    }
+  }
+  @if ($breakpoint == "tab-land") {
+    @media screen and (max-width: $tab-land-size) {
+      @content;
+    }
+  }
+  @if ($breakpoint == "tab-port") {
+    @media screen and (max-width: $tab-port-size) {
+      @content;
+    }
+  }
+  @if ($breakpoint == "big-screen") {
+    @media screen and (min-width: $big-screen-size) {
+      @content;
+    }
+  }
+ 
+}

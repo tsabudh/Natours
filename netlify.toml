@@ -3,10 +3,10 @@
   publish = "public/"
 
 [functions]
-  included_files = ["views/**"]
+  included_files = ["views/**","public/**"]
 
 #[[redirects]]
- # from = "/*"
+ #from = "/*"
   #to = "/.netlify/functions/api/:splat"
 
 
@@ -14,5 +14,9 @@
 
 [dev]
   functions = "src"
-  publish = "public/"
-  targetPort = 5713
+  #publish = "public/"
+  targetPort = 3000
+
+  [[redirects]]
+    from="http://127.0.0.1:3000/*"
+    to="http://127.0.0.1:8888/:splat"

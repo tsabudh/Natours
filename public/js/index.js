@@ -1,79 +1,80 @@
 /* eslint-disable */
 
-import '@babel/polyfill';
+import "@babel/polyfill";
 
-import { login, logout } from './login';
-import { updateSettings } from './updateSettings';
-import { bookTour } from './stripe';
+import { login, logout } from "./login";
+import { updateSettings } from "./updateSettings";
+import { bookTour } from "./stripe";
 
-export const netlifyAPIRoute = "/.netlify/functions/api"; //! NETLIFY API ROUTE
+export const netlifyAPIRoute = "http://127.0.0.1:8888"; //! NETLIFY API ROUTE
+// export const netlifyAPIRoute = "/.netlify/functions/api"; //! NETLIFY API ROUTE
 
 function submitForm(e) {
   e.preventDefault();
-  const email = document.getElementById('email').value;
-  const password = document.getElementById('password').value;
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
   login(email, password);
 }
 
-//DOM ELEMENTS 
-const loginForm = document.querySelector('.form--login');
-const logOutBtn = document.querySelector('.nav__el--logout');
-const userDataForm = document.querySelector('.form-user-data');
-const userPasswordForm = document.querySelector('.form-user-password');
-const bookBtn = document.getElementById('book-tour');
+//DOM ELEMENTS
+const loginForm = document.querySelector(".form--login");
+const logOutBtn = document.querySelector(".nav__el--logout");
+const userDataForm = document.querySelector(".form-user-data");
+const userPasswordForm = document.querySelector(".form-user-password");
+const bookBtn = document.getElementById("book-tour");
 
 if (loginForm) {
-  loginForm.addEventListener('submit', submitForm);
+  loginForm.addEventListener("submit", submitForm);
 }
 
 if (logOutBtn) {
   // console.log('logout button before click event');
-  logOutBtn.addEventListener('click', logout);
+  logOutBtn.addEventListener("click", logout);
   // console.log('logout button after click event');
 }
 
 if (userDataForm) {
-  userDataForm.addEventListener('submit', async (e) => {
+  userDataForm.addEventListener("submit", async (e) => {
     e.preventDefault();
 
     const form = new FormData();
 
-    form.append('name', document.getElementById('name').value);
-    form.append('email', document.getElementById('email').value);
-    form.append('photo', document.getElementById('photo').files[0]);
+    form.append("name", document.getElementById("name").value);
+    form.append("email", document.getElementById("email").value);
+    form.append("photo", document.getElementById("photo").files[0]);
 
     // updateData(name, email);
-    await updateSettings(form, 'data');
+    await updateSettings(form, "data");
   });
 }
 
 if (userPasswordForm) {
-  userPasswordForm.addEventListener('submit', async (e) => {
+  userPasswordForm.addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    userPasswordForm.querySelector('.btn-save-password').textContent =
-      'Updating..';
-    const passwordCurrent = document.getElementById('password-current').value;
-    const password = document.getElementById('password').value;
-    const passwordConfirm = document.getElementById('password-confirm').value;
+    userPasswordForm.querySelector(".btn-save-password").textContent =
+      "Updating..";
+    const passwordCurrent = document.getElementById("password-current").value;
+    const password = document.getElementById("password").value;
+    const passwordConfirm = document.getElementById("password-confirm").value;
     await updateSettings(
       { passwordCurrent, password, passwordConfirm },
-      'password'
+      "password"
     );
-    userPasswordForm.querySelector('.btn-save-password').textContent =
-      'Save Password';
+    userPasswordForm.querySelector(".btn-save-password").textContent =
+      "Save Password";
 
     // password = passwordConfirm = passwordCurrent = ''; why this is causing the following code to not execute??
 
-    document.getElementById('password-current').value = '';
-    document.getElementById('password').value = '';
-    document.getElementById('password-confirm').value = '';
+    document.getElementById("password-current").value = "";
+    document.getElementById("password").value = "";
+    document.getElementById("password-confirm").value = "";
   });
 }
 
 if (bookBtn) {
-  bookBtn.addEventListener('click', (e) => {
-    bookBtn.innerText = 'processing...';
+  bookBtn.addEventListener("click", (e) => {
+    bookBtn.innerText = "processing...";
     const { tourId } = e.target.dataset;
     bookTour(tourId);
   });

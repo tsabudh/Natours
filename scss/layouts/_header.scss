@@ -1,0 +1,50 @@
+.header {
+  background-color: #444;
+  padding: 0 5rem;
+  height: 8rem;
+  align-items: center;
+  position: relative;
+  z-index: 100;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+
+  &_logo {
+    height: 3.5rem;
+  }
+  & .nav {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+
+    &_el {
+      font-size: 1.5rem;
+      color: white;
+      text-transform: uppercase;
+      &:not(:last-child) {
+        margin-right: 1rem;
+      }
+      & img,
+      span {
+        vertical-align: middle;
+        vertical-align: -webkit-baseline-middle;
+        margin-inline: 0.2rem;
+      }
+    }
+    &--user {
+      .nav_el img {
+        width: 4.5rem;
+        border-radius: 10rem;
+        border: 1px solid #918f8f;
+      }
+    }
+  }
+}

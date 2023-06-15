@@ -41,8 +41,8 @@ export const logout = async () => {
     console.log(response);
     if (response.data.status == "success") {
       console.log(location.origin);
-
-      location.assign(`${location.origin}${netlifyAPIRoute}`);
+      location.reload(true);
+      // location.assign(`${location.origin}${netlifyAPIRoute}`);
     }
   } catch (err) {
     console.log("catch block of logout function");
