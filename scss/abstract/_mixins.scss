@@ -21,5 +21,14 @@
       @content;
     }
   }
- 
+}
+
+//* FLUID SIZE VARIATIONS WITH RESPECT TO VIEWPORT WIDTH THROUGH INTERPOLATION
+@mixin fluid($property, $min-size, $max-size) {
+  #{$property}: $max-size;
+  #{$property}: calc(
+    #{$min-size} + (#{strip-unit($max-size - $min-size)}) * ((
+            100vw - #{$phone-size}
+          ) / (#{strip-unit($tab-land-size + $phone-size)}))
+  );
 }

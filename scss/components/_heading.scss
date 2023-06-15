@@ -26,6 +26,7 @@
 
 .heading-primary {
   font-size: 5rem;
+  @include fluid(font-size, 2rem, 5rem);
   text-align: center;
   width: 70%;
   margin: 0 auto;
@@ -89,8 +90,6 @@
     0 100%
   );
 }
-
-
 
 .header__hero {
   height: 100%;

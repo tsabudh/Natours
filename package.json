@@ -4,7 +4,7 @@
   "description": "Learning Express Node MongoDb",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon server.js",
+    "start": "nodemon server.js --ext ",
     "dev": "nodemon server.js",
     "start:prod": "SET NODE_ENV=production & nodemon server.js",
     "debug:dev": " ndb SET NODE_ENV=development server.js",
@@ -13,7 +13,7 @@
     "build:js": "parcel build ./public/js/index.js --out-dir ./public/js --out-file bundle.js  ",
     "build": "netlify deploy --prod",
     "netlify": "netlify build && netlify deploy --prod",
-    "watch:sass":"sass --watch scss/main.scss public/css/style.css"
+    "watch:sass": "sass --watch scss/main.scss public/css/style.css"
   },
   "author": "Sabudh Bahadur Thapa",
   "license": "ISC",

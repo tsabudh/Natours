@@ -1,0 +1,19 @@
+$container-padding-block: 2rem;
+
+.container {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  gap: $grid-gutter-width;
+  grid-auto-rows: minmax(100px, auto);
+  .row {
+    @for $i from 1 through 12 {
+      .col-#{$i} {
+        grid-column: span $i;
+        grid-row: 1;
+      }
+    }
+  }
+}
+$bootstrap-list: sm, md, lg, xl;
+$bootstrap-column-number: 15;
+

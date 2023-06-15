@@ -37,7 +37,7 @@ body {
   font-family: "Lato", sans-serif;
   font-size: 1.6rem;
   color: #777;
-  padding: 3rem;
+  @include fluid(padding, 0rem, 3rem);
   min-height: 100vh;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -49,6 +49,7 @@ body {
 }
 img {
   object-fit: cover;
+  border-radius: inherit;
   width: 100%;
   height: 100%;
 }
@@ -430,7 +431,7 @@ img {
 //   -webkit-box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.15) !important;
 //   box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.15) !important;
 // }
-
+////////////////////////////////////////////////////////////////
 // .section-reviews {
 //   margin-top: calc(0px - var(--section-rotate));
 //   padding: calc(5rem + var(--section-rotate)) 0;
@@ -457,7 +458,7 @@ img {
 //     0 100%
 //   );
 // }
-
+///////////////////////////////////////////
 // .reviews {
 //   padding: 5rem 0;
 //   display: grid;
@@ -613,7 +614,7 @@ img {
 //   font-size: 1.9rem;
 //   font-weight: 400;
 // }
-
+////////////////////////////////////////////
 // .user-view {
 //   background-color: #fff;
 //   max-width: 120rem;
@@ -652,7 +653,7 @@ img {
 //   margin: 0 auto;
 //   padding: 0 8rem;
 // }
-
+////////////////////////////////////////////////////
 // .footer {
 //   background-color: #f7f7f7;
 //   padding: 6rem 4rem 3rem 4rem;
@@ -713,7 +714,7 @@ img {
 //     justify-self: center;
 //   }
 // }
-
+////////////////////////////////////////////////////
 // .nav {
 //   display: -webkit-box;
 //   display: -ms-flexbox;
@@ -805,7 +806,7 @@ img {
 //   text-shadow: none;
 //   border-color: #f7f7f7;
 // }
-
+///////////////////////////////////////////////////////
 // .side-nav {
 //   list-style: none;
 // }
@@ -871,7 +872,7 @@ img {
 //   grid-template-columns: repeat(3, 1fr);
 //   grid-gap: 7rem;
 // }
-
+////////////////////////////////////////////////////////////
 // .error {
 //   position: absolute;
 //   top: 35%;
@@ -903,7 +904,7 @@ img {
 //   max-width: 50rem;
 //   margin: 0 auto;
 // }
-
+////////////////////////////////////////////////////////////
 // .login-form {
 //   margin: 0 auto;
 //   max-width: 55rem;

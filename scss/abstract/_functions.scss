@@ -1,0 +1,5 @@
+@use "sass:math";
+// Function to strip unit (rem,px,em,lh...) during calculations
+@function strip-unit($value) {
+  @return math.div($value, ($value * 0 + 1));
+}

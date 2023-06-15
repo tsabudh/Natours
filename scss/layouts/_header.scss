@@ -1,6 +1,6 @@
 .header {
   background-color: #444;
-  padding: 0 5rem;
+  @include fluid(padding-inline, 1rem, 5rem);
   height: 8rem;
   align-items: center;
   position: relative;
@@ -15,6 +15,7 @@
   -ms-flex-align: center;
 
   &_logo {
+    padding-left: 9rem;
     height: 3.5rem;
   }
   & .nav {
@@ -29,6 +30,7 @@
       font-size: 1.5rem;
       color: white;
       text-transform: uppercase;
+      cursor: pointer;
       &:not(:last-child) {
         margin-right: 1rem;
       }

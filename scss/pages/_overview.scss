@@ -10,11 +10,17 @@ main.main {
   flex-direction: row;
   justify-content: center;
   flex-wrap: wrap;
-  gap: 7rem;
 
+  @include fluid(gap, 2rem, 5rem);
+
+  &::after {
+    content: '';
+    flex-grow: 1;
+    flex-basis: 35rem;
+  }
   & .card {
     min-width: 35rem;
-    max-width: 40rem;
+    // max-width: 40rem;
     border-radius: 0.3rem;
 
     overflow: hidden;

@@ -12218,7 +12218,7 @@ function submitForm(e) {
 
 //DOM ELEMENTS
 var loginForm = document.querySelector(".form--login");
-var logOutBtn = document.querySelector(".nav__el--logout");
+var logOutBtn = document.querySelector(".nav_el--logout");
 var userDataForm = document.querySelector(".form-user-data");
 var userPasswordForm = document.querySelector(".form-user-password");
 var bookBtn = document.getElementById("book-tour");
@@ -12331,7 +12331,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54697" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50234" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];
