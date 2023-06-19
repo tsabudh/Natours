@@ -6,8 +6,8 @@
   included_files = ["views/**","public/**"]
 
 #[[redirects]]
- #from = "/*"
-  #to = "/.netlify/functions/api/:splat"
+#from = "/*"
+#to = "/.netlify/functions/api/:splat"
 
 
   

@@ -5,8 +5,12 @@
   display: -ms-flexbox;
   display: flex;
 
+  @include respond(tab-port) {
+    flex-direction: column;
+  }
   & > * {
-    padding: 0 8vw;
+    // padding: 0 8vw;
+    @include fluid(padding-inline, 1rem, 8rem);
     padding-top: 14vw;
     padding-bottom: calc(1vw + var(--section-rotate));
     -webkit-box-flex: 0;
@@ -16,6 +20,12 @@
 }
 
 .description-box {
+  @include respond(tab-port) {
+    @include fluid(padding-top, 1rem, 5rem);
+  }
+  @include respond(phone) {
+    padding-block: 1rem;
+  }
   & .description {
     margin-right: 5rem;
   }
@@ -32,9 +42,14 @@
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
+  justify-content: space-around;
+  @include fluid(gap, 0.5rem, 3rem);
+
+  @include respond(tab-port) {
+    @include fluid(padding-bottom, 1rem, 5rem);
+    justify-content: space-evenly;
+  }
+
   &_group {
     & h2 {
       margin-bottom: 1.5rem;
@@ -71,9 +86,12 @@
     margin-right: 2.25rem;
     text-transform: uppercase;
     font-size: 1.4rem;
+    white-space: nowrap;
+    @include fluid(margin-right, 0.1rem, 2.25rem);
   }
   &_text {
     text-transform: capitalize;
+    white-space: nowrap;
   }
   &_img {
     overflow: hidden; //*breaks border-radius
@@ -94,15 +112,16 @@
     100% calc(100% - var(--section-rotate)),
     0 100%
   );
-  -webkit-clip-path: polygon(
-    0 var(--section-rotate),
-    100% 0,
-    100% calc(100% - var(--section-rotate)),
-    0 100%
-  );
+
   margin-top: calc(0px - var(--section-rotate));
   position: relative;
   z-index: 1000;
+
+  @include respond(phone) {
+    flex-direction: column;
+    clip-path: none;
+    margin-block: 1rem;
+  }
 }
 
 .picture-box_img {
@@ -120,6 +139,9 @@
   }
   &--3 {
     padding-bottom: 27%;
+  }
+  @include respond(phone) {
+    padding-block: 0.2rem;
   }
 }
 .section-map {
@@ -266,6 +288,11 @@
   padding-bottom: 11rem;
   padding-top: calc(15rem + var(--section-rotate));
   background-color: #f7f7f7;
+  @include respond(phone) {
+    padding-inline: 0.2rem;
+    padding-block: 5rem;
+    padding-top: calc(5rem + var(--section-rotate));
+  }
 }
 
 .cta {
@@ -278,8 +305,19 @@
   border-radius: 2rem;
   -webkit-box-shadow: 0 3rem 8rem 0.5rem rgba(0, 0, 0, 0.15);
   box-shadow: 0 3rem 8rem 0.5rem rgba(0, 0, 0, 0.15);
+  display: flex;
+  justify-content: center;
 
-  .cta_img {
+  @include respond(tab-land) {
+    @include fluid(padding-block, 4rem, 9rem);
+  }
+  @include respond(tab-port) {
+    @include fluid(padding-inline, 1rem, 5rem);
+  }
+  @include respond(phone) {
+    border-radius: 0;
+  }
+  &_img {
     height: 15rem;
     width: 15rem;
     position: absolute;
@@ -289,6 +327,9 @@
     -webkit-box-shadow: 1rem 0.5rem 3rem rgba(0, 0, 0, 0.15);
     box-shadow: 1rem 0.5rem 3rem rgba(0, 0, 0, 0.15);
 
+    @include respond(tab-port) {
+      top: 0%;
+    }
     &--logo {
       padding: 2rem;
       display: -webkit-box;
@@ -309,24 +350,32 @@
       );
       background: linear-gradient(to right bottom, #7dd56f, #28b487);
       z-index: 10;
-      -webkit-transform: translate(-35%, -50%);
       transform: translate(-35%, -50%);
+      @include respond(tab-port) {
+        transform: translate(3rem, 1rem);
+      }
     }
     &--logo img {
       width: 100%;
+      object-fit: contain;
     }
     &--1 {
-      -webkit-transform: translate(-10%, -50%) scale(0.97);
-      transform: translate(-10%, -50%) scale(0.97);
       z-index: 9;
+      transform: translate(-10%, -50%) scale(0.97);
+      @include respond(tab-port) {
+        transform: translate(10rem, 1rem) scale(0.97);
+      }
     }
     &--2 {
-      -webkit-transform: translate(15%, -50%) scale(0.94);
-      transform: translate(15%, -50%) scale(0.94);
       z-index: 8;
+      transform: translate(15%, -50%) scale(0.94);
+      @include respond(tab-port) {
+        transform: translate(17rem, 1rem) scale(0.94);
+      }
     }
   }
-  .cta_content {
+
+  &_content {
     display: grid;
     grid-template-rows: auto auto;
     grid-template-columns: 1fr auto;
@@ -335,10 +384,21 @@
     -webkit-box-align: center;
     -ms-flex-align: center;
     align-items: center;
+
+    @include respond(tab-port) {
+      padding-top: 14rem;
+      grid-template-rows: auto auto auto;
+      grid-template-columns: 1fr;
+      grid-gap: 1rem;
+    }
   }
-  .cta_text {
+  &_text {
     font-size: 1.9rem;
     font-weight: 400;
+    inline-size: 85%;
+    @include respond(tab-port) {
+      inline-size: 100%;
+    }
   }
 }
 //////////////////////////////////////////

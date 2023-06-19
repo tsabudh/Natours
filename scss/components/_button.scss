@@ -1,6 +1,10 @@
 .btn,
 .btn:link,
 .btn:visited {
+  width: fit-content;
+  white-space: nowrap;
+  max-width: 100%;
+  overflow: hidden;
   font-size: 1.6rem;
   padding: 1.4rem 3rem;
   //   border-radius: 1rem;

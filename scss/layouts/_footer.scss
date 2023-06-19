@@ -1,15 +1,17 @@
 .footer {
   position: relative;
-  height: 8rem;
+  min-height: 8rem;
   display: flex;
   justify-content: space-between;
   background: #444;
+  align-items: center;
 
   @include fluid(padding-inline, 1rem, 5rem);
-  align-items: center;
+  @include fluid(padding-block, 1rem, 2rem);
 
   &_logo {
     max-width: 15rem;
+    margin-right: 1rem;
   }
   &_nav {
     display: flex;
@@ -21,8 +23,7 @@
       list-style-type: none;
     }
   }
-  &_copyright{
+  &_copyright {
     @include fluid(margin-left, 1rem, 3rem);
-
   }
 }
