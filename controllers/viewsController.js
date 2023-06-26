@@ -1,3 +1,4 @@
+const pug = require('pug');
 const Tour = require('../models/tourModel');
 const User = require('../models/userModel');
 const Booking = require('../models/bookingModel');
@@ -36,6 +37,32 @@ exports.getTour = catchAsync(async (req, res, next) => {
   });
 });
 
+// const includeFunc = (fileName, options = {}) =>
+//   pug.renderFile(`F:/Studies/Node/natours/views/${fileName}.pug`, options);
+// pug.renderFile(pathToPug, options); //render the pug file
+
+exports.renderTabs = (req, res) => {
+  if (req.params.tab) {
+    console.log(`params is ${req.params.tab}`);
+    const { tab } = req.params;
+    res.render(tab, {
+      // include: includeFunc,
+      user: res.locals.user,
+      tab,
+      title: tab,
+    });
+  } else {
+   
+
+    res.render('account1', {
+      // include: includeFunc,
+      user: res.locals.user,
+      tab: 'bookings',
+      title: 'Bookings',
+    });
+  }
+};
+
 exports.getLoginForm = (req, res) => {
   res.status(200).render('login', {
     title: 'Log into your account',
@@ -43,8 +70,9 @@ exports.getLoginForm = (req, res) => {
 };
 
 exports.getAccount = (req, res) => {
-  res.status(200).render('account', {
+  res.status(200).render('account1', {
     title: 'Your account',
+    tab: '_settings',
   });
 };
 

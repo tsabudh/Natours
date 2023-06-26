@@ -11,12 +11,12 @@
   & li:hover {
     border-left: 4px solid #fff !important;
   }
-  &--active a {
+  &--active dic {
     -webkit-transform: translateX(-3px);
     transform: translateX(-3px);
   }
-  & a:link,
-  & a:visited {
+
+  & .tab {
     padding-block: 1rem;
     @include fluid(padding-inline, 1.5rem, 4rem);
 
@@ -34,8 +34,7 @@
     -webkit-transition: all 0.3s;
     transition: all 0.3s;
   }
-  & a:hover,
-  & a:active {
+  & .tab {
     -webkit-transform: translateX(3px);
     transform: translateX(3px);
   }
@@ -80,7 +79,7 @@
   display: flex;
 
   &_menu {
-    flex: 22rem 1 0;
+    flex: 22rem 0 0; // experimental
     background-image: -webkit-gradient(
       linear,
       left top,

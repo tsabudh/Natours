@@ -1,0 +1,33 @@
+extends base
+
+mixin navItem(link, text, icon, active)
+    li(class=`${active ? 'side-nav-active': ''}`)  
+        .tab( data-to=`${link}`)
+            svg
+                use(xlink:href=`/img/icons.svg#icon-${icon}`)
+            |   #{text}    
+
+block content 
+    main.main
+        .user-view
+            nav.user-view_menu
+                ul.side-nav
+                    +navItem('settings', 'Settings', 'settings', true)
+                    +navItem('bookings', 'My bookings', 'briefcase' )
+                    +navItem('reviews', 'My reviews', 'star')
+                    +navItem('billings', 'Billings', 'credit-card')
+
+                
+                - if(user.role === 'admin')            
+                    .admin-nav
+                    h5.admin-nav_heading Admin
+                    ul.side-nav
+                        +navItem('#', 'Manage tours', 'map')
+                        +navItem('#', 'Manage users', 'users')
+                        +navItem('#', 'Manage reviews', 'star')
+                        +navItem('#', 'Manage bookings', 'briefcase')
+
+            .user-view_content
+                //- |!{include(`F:/Studies/Node/natours/views/${fileName}.pug`,{user})}
+                //- |!{include(tab,{user})}
+                include bookings

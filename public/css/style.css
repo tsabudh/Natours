@@ -686,11 +686,11 @@ img {
 .side-nav--active, .side-nav li:hover {
   border-left: 4px solid #fff !important;
 }
-.side-nav--active a {
+.side-nav--active dic {
   -webkit-transform: translateX(-3px);
   transform: translateX(-3px);
 }
-.side-nav a:link, .side-nav a:visited {
+.side-nav .tab {
   padding-block: 1rem;
   padding-inline: 4rem;
   padding-inline: calc(
@@ -712,7 +712,7 @@ img {
   -webkit-transition: all 0.3s;
   transition: all 0.3s;
 }
-.side-nav a:hover, .side-nav a:active {
+.side-nav .tab {
   -webkit-transform: translateX(3px);
   transform: translateX(3px);
 }
@@ -758,7 +758,7 @@ img {
   display: flex;
 }
 .user-view_menu {
-  flex: 22rem 1 0;
+  flex: 22rem 0 0;
   background-image: -webkit-gradient(linear, left top, right bottom, from(#7dd56f), to(#28b487));
   background-image: linear-gradient(to right bottom, #7dd56f, #28b487);
   padding: 4rem 0;
@@ -1280,7 +1280,7 @@ main.main {
 }
 @media screen and (max-width: 56.25em) {
   .cta_img--logo {
-    transform: translate(1rem, 1rem);
+    transform: translate(3rem, 1rem);
   }
 }
 .cta_img--logo img {
@@ -1293,7 +1293,7 @@ main.main {
 }
 @media screen and (max-width: 56.25em) {
   .cta_img--1 {
-    transform: translate(7rem, 1rem) scale(0.97);
+    transform: translate(10rem, 1rem) scale(0.97);
   }
 }
 .cta_img--2 {
@@ -1302,7 +1302,7 @@ main.main {
 }
 @media screen and (max-width: 56.25em) {
   .cta_img--2 {
-    transform: translate(14rem, 1rem) scale(0.94);
+    transform: translate(17rem, 1rem) scale(0.94);
   }
 }
 .cta_content {

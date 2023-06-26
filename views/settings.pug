@@ -1,0 +1,40 @@
+.user-view_form-container
+    h2.heading-secondary.ma-bt-md Your account settings
+
+    //-     WITHOUT API     
+    //- form.form.form-user-data(action='/submit-user-data' method='POSt' enctype='multipart/form-data')
+
+    //-     WITH API
+    form.form.form-user-data
+        .form_group
+            label.form_label(for='name') Name
+            input#name.form_input(type='text', value=`${user.name}`, required, name='name')
+        .form_group.ma-bt-md
+            label.form_label(for='email') Email address
+            input#email.form_input(type='email', value=`${user.email}`, required , name='email')
+        .form_group.form_photo-upload
+            figure.form_user-photo
+                img(src=`/img/users/${user.photo}`, alt='User photo')
+            input.form_upload(type='file', accept='image/*', id='photo', name='photo')
+            label(for='photo') Choose new photo
+
+
+            .form_group.right
+                button.btn.btn--small.btn--green Save settings
+
+    .line &nbsp;
+
+    .user-view_form-container
+        h2.heading-secondary.ma-bt-md Password change
+        form.form.form-user-password
+            .form_group
+                label.form_label(for='password-current') Current password
+                input#password-current.form_input(type='password', placeholder='••••••••', required, minlength='8')
+            .form_group
+                label.form_label(for='password') New password
+                input#password.form_input(type='password', placeholder='••••••••', required, minlength='8')
+            .form_group.ma-bt-lg
+                label.form_label(for='password-confirm') Confirm password
+                input#password-confirm.form_input(type='password', placeholder='••••••••', required, minlength='8')
+            .form_group.right
+                button.btn.btn--small.btn--green.btn-save-password Save password

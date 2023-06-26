@@ -1,7 +1,7 @@
-const express = require("express");
-const viewsController = require("../controllers/viewsController");
-const authController = require("../controllers/authController");
-const bookingsController = require("../controllers/bookingsController");
+const express = require('express');
+const viewsController = require('../controllers/viewsController');
+const authController = require('../controllers/authController');
+const bookingsController = require('../controllers/bookingsController');
 
 const router = express.Router();
 
@@ -9,18 +9,24 @@ const router = express.Router();
 
 // ROUTES
 router.get(
-  "/",
+  '/',
   bookingsController.createBookingCheckout,
   authController.isLoggedIn,
   viewsController.getOverview
 );
-router.get("/tour/:slug", authController.isLoggedIn, viewsController.getTour);
-router.get("/login", authController.isLoggedIn, viewsController.getLoginForm);
-router.get("/me", authController.protect, viewsController.getAccount);
-router.get("/my-bookings", authController.protect, viewsController.getMyTours);
+router.get('/tour/:slug', authController.isLoggedIn, viewsController.getTour);
+router.get('/login', authController.isLoggedIn, viewsController.getLoginForm);
+router.get('/my-bookings', authController.protect, viewsController.getMyTours);
+
+router.route('/me').get(authController.protect, viewsController.getAccount);
+
+router
+  .route('/me/:tab')
+  .get(authController.protect, viewsController.renderTabs);
+  
 
 router.post(
-  "/submit-user-data",
+  '/submit-user-data',
   authController.protect,
   viewsController.updateUserData
 );
