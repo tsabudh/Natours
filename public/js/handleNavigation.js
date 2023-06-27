@@ -9,6 +9,15 @@ export const handleNavigation = (e) => {
   xhttp.onreadystatechange = function () {
     if (this.readyState === 4 && this.status === 200) {
       renderedHTMLResponse = this.responseText;
+      document
+        .getElementsByClassName('side-nav')[0]
+        .querySelectorAll('li')
+        .forEach((li, index, array) => {
+          li.classList.remove('side-nav-active');
+        });
+      document
+        .querySelector(`[data-to=${e.target.dataset.to}]`).parentElement
+        .classList.add('side-nav-active');
       document.getElementsByClassName('user-view_content')[0].innerHTML =
         renderedHTMLResponse;
     }

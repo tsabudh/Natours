@@ -20,6 +20,6 @@ export const bookTour = async (tourId) => {
     });
   } catch (err) {
     console.log(err);
-    showAlert('error', err);
+    showAlert('error', err.message);
   }
 };

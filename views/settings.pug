@@ -18,23 +18,22 @@
             input.form_upload(type='file', accept='image/*', id='photo', name='photo')
             label(for='photo') Choose new photo
 
-
-            .form_group.right
-                button.btn.btn--small.btn--green Save settings
+        .form_group.right
+            button.btn.btn--small.btn--green Save settings
 
     .line &nbsp;
 
-    .user-view_form-container
-        h2.heading-secondary.ma-bt-md Password change
-        form.form.form-user-password
-            .form_group
-                label.form_label(for='password-current') Current password
-                input#password-current.form_input(type='password', placeholder='••••••••', required, minlength='8')
-            .form_group
-                label.form_label(for='password') New password
-                input#password.form_input(type='password', placeholder='••••••••', required, minlength='8')
-            .form_group.ma-bt-lg
-                label.form_label(for='password-confirm') Confirm password
-                input#password-confirm.form_input(type='password', placeholder='••••••••', required, minlength='8')
-            .form_group.right
-                button.btn.btn--small.btn--green.btn-save-password Save password
+.user-view_form-container
+    h2.heading-secondary.ma-bt-md Password change
+    form.form.form-user-password
+        .form_group
+            label.form_label(for='password-current') Current password
+            input#password-current.form_input(type='password', placeholder='••••••••', required, minlength='8')
+        .form_group
+            label.form_label(for='password') New password
+            input#password.form_input(type='password', placeholder='••••••••', required, minlength='8')
+        .form_group.ma-bt-lg
+            label.form_label(for='password-confirm') Confirm password
+            input#password-confirm.form_input(type='password', placeholder='••••••••', required, minlength='8')
+        .form_group.right
+            button.btn.btn--small.btn--green.btn-save-password Save password

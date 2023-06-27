@@ -12049,7 +12049,7 @@ var bookTour = /*#__PURE__*/function () {
             _context.prev = 8;
             _context.t0 = _context["catch"](0);
             console.log(_context.t0);
-            (0, _alerts.showAlert)('error', _context.t0);
+            (0, _alerts.showAlert)('error', _context.t0.message);
           case 12:
           case "end":
             return _context.stop();
@@ -12079,6 +12079,10 @@ var handleNavigation = function handleNavigation(e) {
   xhttp.onreadystatechange = function () {
     if (this.readyState === 4 && this.status === 200) {
       renderedHTMLResponse = this.responseText;
+      document.getElementsByClassName('side-nav')[0].querySelectorAll('li').forEach(function (li, index, array) {
+        li.classList.remove('side-nav-active');
+      });
+      document.querySelector("[data-to=".concat(e.target.dataset.to, "]")).parentElement.classList.add('side-nav-active');
       document.getElementsByClassName('user-view_content')[0].innerHTML = renderedHTMLResponse;
     }
   };
@@ -12233,7 +12237,7 @@ function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyri
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 // export const netlifyAPIRoute = 'http://127.0.0.1:8888'; //! NETLIFY API ROUTE FOR DEV
-var netlifyAPIRoute = "/.netlify/functions/api"; //! NETLIFY API ROUTE FOR DEPLOY
+var netlifyAPIRoute = '/.netlify/functions/api'; //! NETLIFY API ROUTE FOR DEPLOY
 exports.netlifyAPIRoute = netlifyAPIRoute;
 function submitForm(e) {
   e.preventDefault();
@@ -12370,7 +12374,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49749" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58552" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

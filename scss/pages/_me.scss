@@ -1,19 +1,30 @@
 .side-nav {
+  --hover-color: rgb(126 239 203 / 85%);
   list-style: none;
   white-space: nowrap;
   & li {
     margin: 1rem 0;
     border-left: 0 solid #fff;
-    -webkit-transition: all 0.3s;
-    transition: all 0.3s;
+
+    color: #fff;
   }
-  &--active,
   & li:hover {
-    border-left: 4px solid #fff !important;
+    // border-left: 4px solid #fff !important;
+    color: var(--hover-color);
+    font-weight: 600;
+    & svg {
+      fill: var(--hover-color);
+    }
   }
-  &--active dic {
-    -webkit-transform: translateX(-3px);
-    transform: translateX(-3px);
+  & {
+    li.side-nav-active {
+      background-color: #444;
+      color: #fff;
+
+      & svg {
+        fill: #fff;
+      }
+    }
   }
 
   & .tab {
@@ -26,23 +37,27 @@
     -webkit-box-align: center;
     -ms-flex-align: center;
     align-items: center;
-    color: #fff;
+    // color: #fff;
     font-size: 1.5rem;
     text-transform: uppercase;
     font-weight: 400;
     text-decoration: none;
-    -webkit-transition: all 0.3s;
+    cursor: pointer;
     transition: all 0.3s;
+    &:hover {
+      // color: blue;
+    }
   }
-  & .tab {
-    -webkit-transform: translateX(3px);
-    transform: translateX(3px);
-  }
+  // & .tab {
+  //   -webkit-transform: translateX(3px);
+  //   transform: translateX(3px);
+  // }
   & svg {
     height: 1.9rem;
     width: 1.9rem;
     fill: #f7f7f7;
     margin-right: 2rem;
+    transition: all 0.3s;
   }
 }
 .admin-nav {

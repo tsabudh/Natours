@@ -12,10 +12,11 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
   // 2 Create checkout session
   const session = await stripe.checkout.sessions.create({
     mode: 'payment',
-    success_url: `${req.protocol}://${req.get('host')}/?tour=${
-      req.params.tourId
-    }&user=${req.user.id}&price=${tour.price}`,
-    cancel_url: `${req.protocol}://${req.get('host')}/`,
+    // success_url: `${req.protocol}://${req.get('host')}/?tour=${
+    //   req.params.tourId
+    // }&user=${req.user.id}&price=${tour.price}`,
+    success_url: `${req.protocol}://${req.get('host')}/me`,
+    cancel_url: `${req.protocol}://${req.get('host')}/tour/${tour.slug}`,
     customer_email: req.user.email,
     client_reference_id: req.params.tourId,
     line_items: [
@@ -27,7 +28,7 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
           product_data: {
             name: `${tour.name} Tour`,
             description: tour.summary,
-            images: ['https://tsabudh.com.np/natours-static/img/nat-6.jpg'],
+            images: ['https://tsabudh.com.np/natours-static/img/nat-6.jpg'], //! change to dynamic route to hosted asset url
           },
         },
         quantity: 1,
@@ -56,8 +57,6 @@ exports.createBookingCheckout = catchAsync(async (req, res, next) => {
   });
   res.redirect(req.originalUrl.split('?')[0]);
 });
-
-
 
 exports.getAllBookings = factory.getAll(Booking);
 exports.createBooking = factory.createOne(Booking);

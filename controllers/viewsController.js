@@ -1,17 +1,15 @@
 const pug = require('pug');
+
 const Tour = require('../models/tourModel');
 const User = require('../models/userModel');
 const Booking = require('../models/bookingModel');
+
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
+const { getAllBookings } = require('./bookingsController');
 
 exports.getOverview = catchAsync(async (req, res, next) => {
-  // 1) Get tour data from collection
   const tours = await Tour.find();
-
-  // 2) Build template
-  // 3) Render that template using tour data from 1)
-
   res.status(200).render('overview', {
     title: 'All Tours',
     tours,
@@ -41,26 +39,21 @@ exports.getTour = catchAsync(async (req, res, next) => {
 //   pug.renderFile(`F:/Studies/Node/natours/views/${fileName}.pug`, options);
 // pug.renderFile(pathToPug, options); //render the pug file
 
-exports.renderTabs = (req, res) => {
-  if (req.params.tab) {
-    console.log(`params is ${req.params.tab}`);
-    const { tab } = req.params;
-    res.render(tab, {
-      // include: includeFunc,
-      user: res.locals.user,
-      tab,
-      title: tab,
-    });
-  } else {
-   
+exports.renderTabs = async (req, res, next) => {
+  const renderOptions = {};
+  const { tab } = req.params;
 
-    res.render('account1', {
-      // include: includeFunc,
-      user: res.locals.user,
-      tab: 'bookings',
-      title: 'Bookings',
-    });
-  }
+  renderOptions.user = res.locals.user;
+  renderOptions.title = tab || 'bookings';
+  const bookings = await Booking.find({ user: { _id: res.locals.user._id } });
+  // const results = await getAllBookings();
+// await Booking.deleteMany();
+  renderOptions.bookings = [...bookings];
+  console.log(tab);
+
+  // if (tab) res.status(200).render(tab, { bookings });
+  if (tab) res.status(200).render(tab, { ...renderOptions });
+  else res.render('account1', {...renderOptions});
 };
 
 exports.getLoginForm = (req, res) => {
