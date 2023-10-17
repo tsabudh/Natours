@@ -7,8 +7,8 @@ import { updateSettings } from './updateSettings';
 import { bookTour } from './stripe';
 import { handleNavigation } from './handleNavigation';
 
-// export const netlifyAPIRoute = 'http://127.0.0.1:8888'; //! NETLIFY API ROUTE FOR DEV
-export const netlifyAPIRoute = '/.netlify/functions/api'; //! NETLIFY API ROUTE FOR DEPLOY
+export const netlifyAPIRoute = 'http://127.0.0.1:8888'; //! NETLIFY API ROUTE FOR DEV
+// export const netlifyAPIRoute = '/.netlify/functions/api'; //! NETLIFY API ROUTE FOR DEPLOY
 
 function submitForm(e) {
   e.preventDefault();
