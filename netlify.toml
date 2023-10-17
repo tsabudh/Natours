@@ -5,9 +5,9 @@
 [functions]
   included_files = ["views/**","public/**"]
 
-#[[redirects]]
-#from = "/*"
-#to = "/.netlify/functions/api/:splat"
+[[redirects]]
+from = "/*"
+to = "/.netlify/functions/api/:splat"
 
 
   
@@ -17,6 +17,6 @@
   #publish = "public/"
   targetPort = 3000
 
-  [[redirects]]
-    from="http://127.0.0.1:3000/*"
-    to="http://127.0.0.1:8888/:splat"
+ # [[redirects]]
+ #   from="http://127.0.0.1:3000/*"
+ #   to="http://127.0.0.1:8888/:splat"
