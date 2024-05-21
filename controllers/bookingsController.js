@@ -12,9 +12,7 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
   // 2 Create checkout session
   const session = await stripe.checkout.sessions.create({
     mode: 'payment',
-    // success_url: `${req.protocol}://${req.get('host')}/?tour=${
-    //   req.params.tourId
-    // }&user=${req.user.id}&price=${tour.price}`,
+
     success_url: `${req.protocol}://${req.get('host')}/me`,
     cancel_url: `${req.protocol}://${req.get('host')}/tour/${tour.slug}`,
     customer_email: req.user.email,
@@ -28,7 +26,7 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
           product_data: {
             name: `${tour.name} Tour`,
             description: tour.summary,
-            images: ['https://tsabudh.com.np/natours-static/img/nat-6.jpg'], //! change to dynamic route to hosted asset url
+            images: ['https://tsabudh.com.np/natours-static/img/nat-6.jpg'],
           },
         },
         quantity: 1,
@@ -45,7 +43,6 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
 });
 
 exports.createBookingCheckout = catchAsync(async (req, res, next) => {
-  //! This is unsecure, everyone can make bookings without paying
   const { tour, user, price } = req.query;
 
   if (!tour && !user && !price) return next();
